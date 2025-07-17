@@ -5,7 +5,7 @@ description = "A comprehensive toolkit for streamlined development, testing, and
 authors = [
     {name = "Henry He", email = "henryhyn@163.com"},
 ]
-dependencies = []
+dependencies = ["requests>=2.32.4", "marshmallow==3.23.3", "promptflow==1.16.2"]
 requires-python = ">=3.9"
 readme = "README.md"
 license = {text = "MIT"}
