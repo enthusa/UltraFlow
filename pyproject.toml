@@ -1,0 +1,19 @@
+[project]
+name = "UltraFlow"
+version = "0.1.0"
+description = "A comprehensive toolkit for streamlined development, testing, and deployment of prompt."
+authors = [
+    {name = "Henry He", email = "henryhyn@163.com"},
+]
+dependencies = []
+requires-python = ">=3.9"
+readme = "README.md"
+license = {text = "MIT"}
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+
+[tool.pdm]
+distribution = true
