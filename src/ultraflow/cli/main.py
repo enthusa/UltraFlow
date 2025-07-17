@@ -1,9 +1,10 @@
 import typer
-from ultraflow.core.flow import Flow
+from ultraflow import Flow, __version__
 
 app = typer.Typer(
     name='uf',
-    help='UltraFlow 命令行工具'
+    help='UltraFlow 命令行工具',
+    add_completion=False
 )
 
 
@@ -15,4 +16,4 @@ def greet(name: str = typer.Argument(..., help='要问候的名字')):
 
 @app.command()
 def version():
-    typer.echo('0.0.1')
+    typer.echo(__version__)
