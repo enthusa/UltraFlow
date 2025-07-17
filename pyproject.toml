@@ -5,7 +5,7 @@ description = "A comprehensive toolkit for streamlined development, testing, and
 authors = [
     {name = "Henry He", email = "henryhyn@163.com"},
 ]
-dependencies = ["requests>=2.32.4", "marshmallow==3.23.3", "promptflow==1.16.2"]
+dependencies = ["requests>=2.32.4", "marshmallow==3.23.3", "promptflow==1.16.2", "pip>=25.1.1", "typer>=0.16.0"]
 requires-python = ">=3.9"
 readme = "README.md"
 license = {text = "MIT"}
@@ -14,6 +14,8 @@ license = {text = "MIT"}
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
 
+[project.scripts]
+uf = "ultraflow.cli.main:app"
 
 [tool.pdm]
 distribution = true
