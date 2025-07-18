@@ -2,6 +2,7 @@ import json
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import List, Any
+from flow import Prompty
 
 
 class FlowProcessor:
@@ -17,11 +18,9 @@ class FlowProcessor:
             data = json.load(f)
         return data if isinstance(data, list) else [data]
 
-    def _process_item(self, flow: Any, item: dict) -> Any:
-        input_signature = getattr(flow, '_inputs', {})
-        if not input_signature:
-            return flow(**item)
-        resolved_inputs = {name: item.get(name) for name in input_signature}
+    @staticmethod
+    def _process_item(flow: Prompty, item: dict) -> Any:
+        resolved_inputs = flow.resolve_inputs(item)
         return flow(**resolved_inputs)
 
     def _run_single_thread(self, flow: Any, items: List[Any]) -> List[Any]:

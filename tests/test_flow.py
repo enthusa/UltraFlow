@@ -1,4 +1,4 @@
-from ultraflow import Flow
+from ultraflow import Prompty
 
-flow = Flow()
+flow = Prompty()
 print(flow())
