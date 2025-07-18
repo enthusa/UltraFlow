@@ -26,7 +26,7 @@ class Prompty:
                 self.parameters['model'] = model['configuration'].model
             self.parameters.update(model['parameters'])
         self.model = self.parameters['model']
-        self._inputs = configs.get("inputs", {})
+        self._inputs = configs.get('inputs', {})
         self.connection = self._select_connection_by_model(self.parameters['model'])
 
     @trace
@@ -34,7 +34,7 @@ class Prompty:
         inputs = self.resolve_inputs(kwargs)
         enrich_prompt_template(self._template, variables=inputs)
 
-        traced_convert_prompt_template = _traced(func=convert_prompt_template, args_to_ignore=["api"])
+        traced_convert_prompt_template = _traced(func=convert_prompt_template, args_to_ignore=['api'])
         messages = traced_convert_prompt_template(self._template, inputs, 'chat')
 
         data = {'messages': messages, **self.parameters}
@@ -49,8 +49,7 @@ class Prompty:
     @trace
     def call_llm_api(self, data):
         url = self.connection['url']
-        headers = {'Content-Type': 'application/json',
-                   'Authorization': f'Bearer {self.connection["api_key"]}'}
+        headers = {'Content-Type': 'application/json', 'Authorization': f'Bearer {self.connection["api_key"]}'}
         r = requests.post(url, json=data, headers=headers)
         return r.json()
 
@@ -72,13 +71,13 @@ class Prompty:
             model_list = connection.get('model_list', [])
             if model_name in model_list:
                 return connection
-        raise ValueError(f"未在 connection_config.json 中找到包含模型 {model_name} 的 connection")
+        raise ValueError(f'未在 connection_config.json 中找到包含模型 {model_name} 的 connection')
 
     @staticmethod
     def _parse_prompty(path):
-        with open(path, "r", encoding='utf-8') as f:
+        with open(path, 'r', encoding='utf-8') as f:
             prompty_content = f.read()
-        pattern = r"-{3,}\n(.*?)-{3,}\n(.*)"
+        pattern = r'-{3,}\n(.*?)-{3,}\n(.*)'
         result = re.search(pattern, prompty_content, re.DOTALL)
         config_content, prompt_template = result.groups()
         configs = load_yaml_string(config_content)

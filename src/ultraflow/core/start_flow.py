@@ -13,7 +13,7 @@ class FlowProcessor:
 
     def _load_and_validate(self) -> List[Any]:
         if not self.data_path.exists():
-            raise FileNotFoundError(f"Error: {self.data_path} does not exist")
+            raise FileNotFoundError(f'Error: {self.data_path} does not exist')
         with open(self.data_path, 'r', encoding='utf-8') as f:
             data = json.load(f)
         return data if isinstance(data, list) else [data]
@@ -24,11 +24,11 @@ class FlowProcessor:
         return flow(**resolved_inputs)
 
     def _run_single_thread(self, flow: Prompty, items: List[Any]) -> List[Any]:
-        print("Single-thread processing mode")
+        print('Single-thread processing mode')
         return [self._process_item(flow, item) for item in items]
 
     def _run_multi_thread(self, flow: Prompty, items: List[Any]) -> List[Any]:
-        print(f"Multi-thread processing mode, using {self.max_workers} workers")
+        print(f'Multi-thread processing mode, using {self.max_workers} workers')
         with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
             futures = {executor.submit(self._process_item, flow, item): item for item in items}
             return [future.result() for future in as_completed(futures)]

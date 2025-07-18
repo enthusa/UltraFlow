@@ -25,34 +25,32 @@ UltraFlow 是一个开源项目，我们非常欢迎并鼓励社区成员参与�
 PDM 是一个现代的 Python 包管理器，它支持 PEP 582，可以更好地管理项目依赖和虚拟环境。如果您尚未安装 PDM，可以通过以下命令安装：
 
 ```bash
-curl -sSL https://pdm.fming.dev/install.py | python3 -
+conda activate py39 # 根据实际情况激活一个 Python 3.9 的环境
+python3 -m pip uninstall -y pipx
+python3 -m pip install --user --upgrade pip
+python3 -m pip install --user pipx
+python3 -m pipx ensurepath
+pipx --version
+
+pipx install pdm
+pdm --version
 ```
-
-或者使用 pip 安装：
-
-```bash
-pip install pdm
-```
-
-安装完成后，建议将 PDM 的 bin 目录添加到您的 PATH 环境变量中。
 
 ### 2.3 克隆仓库
 
 首先，您需要将 UltraFlow 的代码仓库克隆到本地：
 
 ```bash
-git clone https://github.com/your-username/UltraFlow.git
+git clone git@github.com:enthusa/UltraFlow.git
 cd UltraFlow
 ```
-
-**注意**：请将 `your-username` 替换为实际的 GitHub 用户名或组织名。
 
 ### 2.4 安装项目依赖
 
 进入项目根目录后，使用 PDM 安装项目依赖：
 
 ```bash
-pdm install
+pdm sync
 ```
 
 PDM 会自动创建并激活一个虚拟环境，并将所有项目依赖安装到该环境中。如果您想激活虚拟环境，可以使用 `pdm run bash` 或 `pdm run zsh`。
@@ -72,7 +70,7 @@ pdm run pytest
 1.  **Fork 仓库**：在 GitHub 上 Fork UltraFlow 仓库到您自己的账户。
 2.  **克隆您的 Fork**：将您 Fork 的仓库克隆到本地。
     ```bash
-    git clone https://github.com/your-github-username/UltraFlow.git
+    git clone git@github.com:enthusa/UltraFlow.git
     cd UltraFlow
     ```
 3.  **创建新分支**：为您的新功能或 Bug 修复创建一个新的分支。分支名称应具有描述性，例如 `feature/add-new-command` 或 `fix/bug-in-batch-test`。
@@ -88,7 +86,7 @@ pdm run pytest
     （我们推荐使用 Conventional Commits 规范，例如 `feat:`, `fix:`, `docs:`, `chore:` 等前缀）
 6.  **同步上游**：在提交 PR 之前，请确保您的分支与上游 `main` 分支保持同步，以避免合并冲突。
     ```bash
-    git remote add upstream https://github.com/your-username/UltraFlow.git # 首次添加
+    git remote add upstream git@github.com:enthusa/UltraFlow.git # 首次添加
     git checkout main
     git pull upstream main
     git checkout feature/your-feature-name

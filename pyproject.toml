@@ -29,7 +29,16 @@ uf = "ultraflow.cli.main:app"
 [tool.pdm]
 distribution = true
 
+[tool.ruff]
+respect-gitignore = true
+target-version = "py39"
+line-length = 200
+
+[tool.ruff.format]
+quote-style = "single"
+
 [dependency-groups]
 dev = [
     "pytest>=8.4.1",
+    "ruff>=0.12.4",
 ]
