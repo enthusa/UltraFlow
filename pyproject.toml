@@ -28,3 +28,8 @@ uf = "ultraflow.cli.main:app"
 
 [tool.pdm]
 distribution = true
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.1",
+]
