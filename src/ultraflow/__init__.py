@@ -1,4 +1,5 @@
-from ultraflow.core.flow import Flow
+from ultraflow.core.flow import Prompty
+from ultraflow.core.start_flow import FlowProcessor
 
-__version__ = "0.1.1"
-__all__ = ['Flow', '__version__']
+__version__ = "0.1.2"
+__all__ = ['Prompty', 'FlowProcessor', '__version__']

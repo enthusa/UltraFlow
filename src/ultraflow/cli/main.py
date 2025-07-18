@@ -1,19 +1,30 @@
-import typer
-from ultraflow import Flow, __version__
+import click
+from ultraflow import Prompty, FlowProcessor, __version__
+from promptflow.tracing import start_trace
+import time
 
-app = typer.Typer(
-    name='uf',
-    help='UltraFlow 命令行工具',
-    add_completion=False
-)
+
+@click.group()
+def app():
+    pass
 
 
 @app.command()
-def greet(name: str = typer.Argument(..., help='要问候的名字')):
-    flow = Flow()
-    typer.echo(flow(name=name))
+@click.argument('flow_path')
+@click.option('--data', help='Input data file path (JSON format)')
+@click.option('--max_workers', type=int, default=2, help='Number of parallel workers, default is 2')
+def run(flow_path, data, max_workers):
+    flow = Prompty.load(flow_path)
+    flow_name = flow_path.split('/')[-1].split('.')[0]
+    collection = f"{flow_name}_{flow.model}_{time.strftime('%Y%m%d%H%M%S', time.localtime())}"
+    start_trace(collection=collection)
+    FlowProcessor(flow=flow, data_path=data, max_workers=max_workers).run()
 
 
 @app.command()
 def version():
-    typer.echo(__version__)
+    click.echo(__version__)
+
+
+if __name__ == '__main__':
+    app()

@@ -16,8 +16,8 @@ pip install -e .
 
 - [ ] uf init 初始化一个提示词工程项目, 配置 connection, apikey
 - [ ] uf new 创建一个提示词模版, 即 prompty 文件
-- [ ] uf run --flow <xxx.prompty>, 启动 web ui 交互式对话界面, 支持多轮对话, 展示 request/response 详情
-- [ ] uf run --flow <xxx.prompty> --data <xxx.json> 批量测试, 支持多线程
+- [ ] uf run <xxx.prompty>, 启动 web ui 交互式对话界面, 支持多轮对话, 展示 request/response 详情
+- [ ] uf run <xxx.prompty> --data <xxx.json> 批量测试, 支持多线程
 - [ ] uf serve 以 API 方式启动微服务
 - [ ] uf dag 可视化一个复杂任务
 

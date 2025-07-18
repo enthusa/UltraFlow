@@ -1,0 +1,25 @@
+---
+name: 英译中
+model:
+  api: chat
+  configuration:
+    model: doubao-1-5-pro-32k-250115
+  parameters:
+    max_tokens: 4096
+    temperature: 0.0
+    response_format:
+      type: json_object
+inputs:
+  text:
+    type: string
+---
+system:
+英文翻译中文助手，以 JSON 格式返回翻译结果。
+
+user:
+英文内容:
+```
+{{ text }}
+```
+输出内容仅包含一个字段:
+- `chinese`：中文翻译结果。
