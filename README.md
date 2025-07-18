@@ -38,27 +38,38 @@ UltraFlow 采用 `pdm` 进行项目管理，确保依赖的清晰和项目的可
 UltraFlow 将发布到 PyPI，用户可以通过 `pip` 命令一键安装。在安装之前，请确保您的 Python 版本为 3.9 或更高。
 
 ```bash
-pip install ultraflow
+pip install -U UltraFlow
 ```
 
 对于开发和贡献者，可以通过以下步骤从源代码安装：
 
-1.  **克隆仓库**：
-    ```bash
-    git clone https://github.com/your-username/UltraFlow.git
-    cd UltraFlow
-    ```
-2.  **创建并激活虚拟环境**：
-    ```bash
-    python3.9 -m venv .venv
-    source .venv/bin/activate
-    ```
-    （请根据您的 Python 解释器路径调整 `python3.9`）
-3.  **安装依赖**：
-    ```bash
-    pip install -U pip setuptools wheel
-    pip install -e .
-    ```
+0. 安装 pdm, 建议通过 pipx 安装, 先激活一个 python 3.9 的环境
+```bash
+conda activate py39
+python3 -m pip uninstall -y pipx
+python3 -m pip install --user --upgrade pip
+python3 -m pip install --user pipx
+python3 -m pipx ensurepath
+pipx --version
+
+pipx install pdm
+pdm --version
+```
+1. 克隆仓库：
+```bash
+git clone git@github.com:enthusa/UltraFlow.git
+cd UltraFlow
+```
+2. 创建并激活虚拟环境：
+```bash
+pdm sync
+source .venv/bin/activate
+```
+3. 安装依赖：
+```bash
+pip install -U pip setuptools wheel
+pip install -e .
+```
 
 ## 4. 快速入门
 
@@ -143,9 +154,7 @@ UltraFlow 的设计遵循“约定优于配置”和“支持代码引用和命�
 
 ## 7. 贡献与支持
 
-UltraFlow 是一个开源项目，我们欢迎并鼓励社区的贡献。如果您有任何问题、建议或想参与贡献，请访问我们的 GitHub 仓库：
-
-[GitHub 仓库链接](https://github.com/your-username/UltraFlow)
+UltraFlow 是一个开源项目，我们欢迎并鼓励社区的贡献。如果您有任何问题、建议或想参与贡献，请访问我们的 GitHub 仓库：[GitHub 仓库链接](https://github.com/enthusa/UltraFlow)
 
 您可以通过以下方式支持我们：
 
