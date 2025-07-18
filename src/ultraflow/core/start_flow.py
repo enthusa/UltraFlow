@@ -2,11 +2,11 @@ import json
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import List, Any
-from flow import Prompty
+from ultraflow.core.flow import Prompty
 
 
 class FlowProcessor:
-    def __init__(self, flow: str, data_path: str, max_workers: int = 2):
+    def __init__(self, flow: Prompty, data_path: str, max_workers: int = 2):
         self.flow = flow
         self.data_path = Path(data_path)
         self.max_workers = max_workers
@@ -23,11 +23,11 @@ class FlowProcessor:
         resolved_inputs = flow.resolve_inputs(item)
         return flow(**resolved_inputs)
 
-    def _run_single_thread(self, flow: Any, items: List[Any]) -> List[Any]:
+    def _run_single_thread(self, flow: Prompty, items: List[Any]) -> List[Any]:
         print("Single-thread processing mode")
         return [self._process_item(flow, item) for item in items]
 
-    def _run_multi_thread(self, flow: Any, items: List[Any]) -> List[Any]:
+    def _run_multi_thread(self, flow: Prompty, items: List[Any]) -> List[Any]:
         print(f"Multi-thread processing mode, using {self.max_workers} workers")
         with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
             futures = {executor.submit(self._process_item, flow, item): item for item in items}
