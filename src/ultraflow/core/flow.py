@@ -31,7 +31,7 @@ class Prompty:
 
     @trace
     def __call__(self, *args, **kwargs):
-        inputs = self._resolve_inputs(kwargs)
+        inputs = self.resolve_inputs(kwargs)
         enrich_prompt_template(self._template, variables=inputs)
 
         traced_convert_prompt_template = _traced(func=convert_prompt_template, args_to_ignore=["api"])
@@ -84,7 +84,7 @@ class Prompty:
         configs = load_yaml_string(config_content)
         return configs, prompt_template
 
-    def _resolve_inputs(self, input_values):
+    def resolve_inputs(self, input_values):
         resolved_inputs = dict()
         for input_name, value in self._inputs.items():
             resolved_inputs[input_name] = input_values[input_name]
