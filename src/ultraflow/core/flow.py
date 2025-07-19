@@ -1,23 +1,25 @@
+from __future__ import annotations
+
 import json
-from os import PathLike
-from pathlib import Path
-from typing import Union
-from os import path as osp
 import re
-import requests
+from os import PathLike
+from os import path as osp
+from pathlib import Path
+
 import json_repair
+import requests
+from promptflow._utils.yaml_utils import load_yaml_string
+from promptflow.core._prompty_utils import convert_prompt_template
 from promptflow.tracing import trace
 from promptflow.tracing._experimental import enrich_prompt_template
 from promptflow.tracing._trace import _traced
-from promptflow.core._prompty_utils import convert_prompt_template
-from promptflow._utils.yaml_utils import load_yaml_string
 
 
 class Prompty:
-    def __init__(self, path: Union[str, PathLike], model: dict = None, **kwargs):
+    def __init__(self, path: str | PathLike, model: dict | None = None, **kwargs):
         self.path = path
         configs, self._template = self._parse_prompty(path)
-        self.parameters = dict()
+        self.parameters = {}
         if 'configuration' in configs['model']:
             self.parameters['model'] = configs['model']['configuration']['model']
         self.parameters.update(configs['model']['parameters'])
@@ -54,7 +56,7 @@ class Prompty:
         return r.json()
 
     @classmethod
-    def load(cls, source: Union[str, PathLike], **kwargs):
+    def load(cls, source: str | PathLike, **kwargs):
         source_path = Path(source)
         return cls._load(path=source_path, **kwargs)
 
@@ -65,7 +67,7 @@ class Prompty:
     @classmethod
     def _select_connection_by_model(cls, model_name):
         connection_config_file = osp.join(osp.expanduser('~'), '.ultraflow/connection_config.json')
-        with open(connection_config_file, 'r', encoding='utf-8') as file:
+        with open(connection_config_file, encoding='utf-8') as file:
             connection_config = json.load(file)
         for _, connection in connection_config.items():
             model_list = connection.get('model_list', [])
@@ -75,7 +77,7 @@ class Prompty:
 
     @staticmethod
     def _parse_prompty(path):
-        with open(path, 'r', encoding='utf-8') as f:
+        with open(path, encoding='utf-8') as f:
             prompty_content = f.read()
         pattern = r'-{3,}\n(.*?)-{3,}\n(.*)'
         result = re.search(pattern, prompty_content, re.DOTALL)
@@ -84,7 +86,7 @@ class Prompty:
         return configs, prompt_template
 
     def resolve_inputs(self, input_values):
-        resolved_inputs = dict()
-        for input_name, value in self._inputs.items():
+        resolved_inputs = {}
+        for input_name, _value in self._inputs.items():
             resolved_inputs[input_name] = input_values[input_name]
         return resolved_inputs

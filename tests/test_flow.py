@@ -1,7 +1,9 @@
-from ultraflow import Prompty
 from os import path as osp
+
 import pandas as pd
 from promptflow.tracing import start_trace
+
+from ultraflow import Prompty
 
 
 def test_chat():
