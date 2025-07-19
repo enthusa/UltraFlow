@@ -2,19 +2,26 @@
 name = "UltraFlow"
 version = "0.1.4"
 description = "A comprehensive toolkit for streamlined development, testing, and deployment of prompt."
+readme = "README.md"
+license = {text = "MIT"}
 authors = [
     {name = "Henry He", email = "henryhyn@163.com"},
 ]
+requires-python = "!=3.13.*,>=3.9"
 dependencies = [
-    "requests>=2.32.4",
     "marshmallow==3.23.3",
     "promptflow==1.16.2",
-    "click>=8.1.8",
     "json-repair>=0.44.1",
 ]
-requires-python = "!=3.13.*,>=3.9"
-readme = "README.md"
-license = {text = "MIT"}
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.1",
+    "ruff>=0.12.4",
+]
+docs = [
+    "sphinx>=7.4.7",
+]
 
 [build-system]
 requires = ["pdm-backend"]
@@ -52,8 +59,10 @@ extend-select = [
 ]
 extend-ignore = ["B018", "B019", "RUF018"]
 
-[dependency-groups]
-dev = [
-    "pytest>=8.4.1",
-    "ruff>=0.12.4",
-]
+[tool.ruff.lint.pyupgrade]
+keep-runtime-typing = true
+
+[tool.pdm.scripts]
+format = "ruff format ."
+lint = "ruff check . --fix"
+test = "pytest"

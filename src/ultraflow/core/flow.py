@@ -1,10 +1,9 @@
-from __future__ import annotations
-
 import json
 import re
 from os import PathLike
 from os import path as osp
 from pathlib import Path
+from typing import Optional, Union
 
 import json_repair
 import requests
@@ -16,7 +15,7 @@ from promptflow.tracing._trace import _traced
 
 
 class Prompty:
-    def __init__(self, path: str | PathLike, model: dict | None = None, **kwargs):
+    def __init__(self, path: Union[str, PathLike], model: Optional[dict] = None, **kwargs):
         self.path = path
         configs, self._template = self._parse_prompty(path)
         self.parameters = {}
@@ -56,7 +55,7 @@ class Prompty:
         return r.json()
 
     @classmethod
-    def load(cls, source: str | PathLike, **kwargs):
+    def load(cls, source: Union[str, PathLike], **kwargs):
         source_path = Path(source)
         return cls._load(path=source_path, **kwargs)
 
