@@ -1,7 +1,6 @@
 import json
 import re
 from os import PathLike
-from os import path as osp
 from pathlib import Path
 from typing import Optional, Union
 
@@ -12,6 +11,8 @@ from promptflow.core._prompty_utils import convert_prompt_template
 from promptflow.tracing import trace
 from promptflow.tracing._experimental import enrich_prompt_template
 from promptflow.tracing._trace import _traced
+
+from ultraflow.core.utils import find_connection_config
 
 
 class Prompty:
@@ -65,14 +66,16 @@ class Prompty:
 
     @classmethod
     def _select_connection_by_model(cls, model_name):
-        connection_config_file = osp.join(osp.expanduser('~'), '.ultraflow/connection_config.json')
+        connection_config_file = find_connection_config()
+        if connection_config_file is None:
+            raise FileNotFoundError('Connection config file not found.')
         with open(connection_config_file, encoding='utf-8') as file:
             connection_config = json.load(file)
         for _, connection in connection_config.items():
             model_list = connection.get('model_list', [])
             if model_name in model_list:
                 return connection
-        raise ValueError(f'未在 connection_config.json 中找到包含模型 {model_name} 的 connection')
+        raise ValueError(f'Model {model_name} not found in any connection in connection_config.json')
 
     @staticmethod
     def _parse_prompty(path):
