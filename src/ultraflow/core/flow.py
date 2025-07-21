@@ -1,7 +1,6 @@
 import json
 import re
 from os import PathLike
-from os import path as osp
 from pathlib import Path
 from typing import Optional, Union
 
@@ -12,6 +11,7 @@ from promptflow.core._prompty_utils import convert_prompt_template
 from promptflow.tracing import trace
 from promptflow.tracing._experimental import enrich_prompt_template
 from promptflow.tracing._trace import _traced
+
 from ultraflow.core.utils import find_connection_config
 
 
