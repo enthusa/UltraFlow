@@ -10,7 +10,7 @@ from promptflow._utils.yaml_utils import load_yaml_string
 from promptflow.core._prompty_utils import convert_prompt_template
 from promptflow.tracing import trace
 from promptflow.tracing._experimental import enrich_prompt_template
-from promptflow.tracing._trace import _traced
+from promptflow.tracing._trace import TraceType, _traced
 
 from ultraflow.core.utils import find_connection_config
 
@@ -41,6 +41,9 @@ class Prompty:
 
         data = {'messages': messages, **self.parameters}
         response = self.call_llm_api(data)
+        traced_chat = _traced(func=self.chat, trace_type=TraceType.LLM, args_to_ignore=['response'], name='chat')
+        traced_chat(data['messages'], response)
+
         is_json = 'response_format' in data and data['response_format']['type'] == 'json_object'
         if 'choices' in response:
             reply = response['choices'][0]['message']['content']
@@ -54,6 +57,9 @@ class Prompty:
         headers = {'Content-Type': 'application/json', 'Authorization': f'Bearer {self.connection["api_key"]}'}
         r = requests.post(url, json=data, headers=headers)
         return r.json()
+
+    def chat(self, messages, response):
+        return response
 
     @classmethod
     def load(cls, source: Union[str, PathLike], **kwargs):

@@ -110,6 +110,7 @@ ipython_config.py
 #   https://pdm-project.org/#use-with-ide
 .pdm.toml
 .pdm-python
+.python-version
 .pdm-build/
 
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
