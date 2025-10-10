@@ -1,6 +1,6 @@
 [project]
 name = "UltraFlow"
-version = "0.1.6"
+version = "0.1.7"
 description = "A comprehensive toolkit for streamlined development, testing, and deployment of prompt."
 readme = "README.md"
 license = {text = "MIT"}
@@ -11,16 +11,15 @@ requires-python = "!=3.13.*,>=3.9"
 dependencies = [
     "marshmallow==3.23.3",
     "promptflow==1.16.2",
-    "json-repair>=0.44.1",
+    "json-repair==0.44.1",
 ]
 
 [dependency-groups]
 dev = [
-    "pytest>=8.4.1",
-    "ruff>=0.12.4",
+    "pytest>=8.4.2",
+    "ruff>=0.14.0",
 ]
 docs = [
-    "sphinx>=7.4.7",
 ]
 
 [build-system]

@@ -1,4 +1,5 @@
 import json
+import logging
 import re
 from os import PathLike
 from pathlib import Path
@@ -40,7 +41,11 @@ class Prompty:
         messages = traced_convert_prompt_template(self._template, inputs, 'chat')
 
         data = {'messages': messages, **self.parameters}
-        response = self.call_llm_api(data)
+        url = self.connection['url']
+        api_key = self.connection['api_key']
+        api_key_tail = api_key[-4:]
+        traced_call_chat_api = _traced(func=self.call_chat_api, args_to_ignore=['api_key'], name='call_chat_api')
+        response = traced_call_chat_api(data, url, api_key, api_key_tail)
         traced_chat = _traced(func=self.chat, trace_type=TraceType.LLM, args_to_ignore=['response'], name='chat')
         traced_chat(data['messages'], response)
 
@@ -51,14 +56,13 @@ class Prompty:
                 return json_repair.loads(reply)
             return reply
 
-    @trace
-    def call_llm_api(self, data):
-        url = self.connection['url']
-        headers = {'Content-Type': 'application/json', 'Authorization': f'Bearer {self.connection["api_key"]}'}
+    def call_chat_api(self, data, url, api_key, api_key_tail):
+        headers = {'Content-Type': 'application/json', 'Authorization': f'Bearer {api_key}'}
         r = requests.post(url, json=data, headers=headers)
         return r.json()
 
-    def chat(self, messages, response):
+    @staticmethod
+    def chat(messages, response):
         return response
 
     @classmethod
@@ -75,6 +79,7 @@ class Prompty:
         connection_config_file = find_connection_config()
         if connection_config_file is None:
             raise FileNotFoundError('Connection config file not found.')
+        logging.info('Load connection from %s', connection_config_file)
         with open(connection_config_file, encoding='utf-8') as file:
             connection_config = json.load(file)
         for _, connection in connection_config.items():
