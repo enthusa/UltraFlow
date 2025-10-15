@@ -7,7 +7,7 @@ license = {text = "MIT"}
 authors = [
     {name = "Henry He", email = "henryhyn@163.com"},
 ]
-requires-python = "!=3.13.*,>=3.9"
+requires-python = "!=3.13.*,>=3.9.2"
 dependencies = [
     "marshmallow==3.23.3",
     "promptflow==1.16.2",
@@ -16,10 +16,11 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "pytest>=8.4.2",
-    "ruff>=0.14.0",
+    "pytest==8.4.2",
+    "ruff==0.14.0",
 ]
 docs = [
+    "mkdocs-material==9.6.21",
 ]
 
 [build-system]
@@ -65,3 +66,5 @@ keep-runtime-typing = true
 format = "ruff format ."
 lint = "ruff check . --fix"
 test = "pytest"
+docs-dev = "mkdocs serve --dirty"
+docs-build = "mkdocs build"
