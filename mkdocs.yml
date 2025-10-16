@@ -1,3 +1,6 @@
 site_name: UltraFlow
 theme:
   name: material
+markdown_extensions:
+  - pymdownx.tasklist:
+      custom_checkbox: true
