@@ -1,0 +1,29 @@
+---
+name: 任务名称
+model:
+  api: chat
+  configuration:
+    model: doubao-1-5-pro-32k-250115
+  parameters:
+    max_tokens: 4096
+    temperature: 0.0
+    response_format:
+      type: json_object
+inputs:
+  text:
+    type: string
+---
+system:
+一句话描述要让 AI 做什么事情。
+
+适当补充背景
+
+## 行动准则
+
+## 输出准则
+
+以 JSON 格式输出如下字段：
+- `result`: str
+
+user:
+{{ text }}

@@ -13,8 +13,9 @@ pip install -U UltraFlow
 使用 `uf init` 命令初始化一个新的提示词工程项目：
 
 ```bash
-uf init my_prompt_project
+mkdir my_prompt_project
 cd my_prompt_project
+uf init
 ```
 
 该命令将创建一个新的目录 `my_prompt_project`，并在其中生成项目所需的基本文件和配置。

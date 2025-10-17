@@ -4,7 +4,7 @@
 
 提示词工程开发、测试、部署一站式工具。(工具使用截图如下)
 
-![](https://pic-gino-prod.oss-cn-qingdao.aliyuncs.com/henry/20251016203242758-_20251016203226_58.png)
+![](https://pic-gino-prod.oss-cn-qingdao.aliyuncs.com/henry/20251017114825308-_20251017114655_105.png)
 
 UltraFlow 是一个专为大模型提示词工程项目设计的一站式开源工具包。它旨在简化和加速提示词的创建、开发、测试、发布和部署流程，为开发者提供一个高效、便捷的解决方案。随着大型语言模型 (LLMs) 在各个领域的广泛应用，提示词工程 (Prompt Engineering) 已成为一项关键技能。然而，目前市场上缺乏一个简洁的集成化的工具来管理提示词的整个生命周期。UltraFlow 的出现正是为了填补这一空白，它将提示词工程从一个艺术性的实践提升为一套系统化、工程化的流程。
 
@@ -43,8 +43,8 @@ UltraFlow 采用 `pdm` 进行项目管理，确保依赖的清晰和项目的可
 
 ### 3.1 项目规划
 
-- [ ] `uf init` 初始化一个提示词工程项目，配置 connection, apikey
-- [ ] `uf new` 创建一个提示词模版，即 prompty 文件
+- [x] `uf init` 初始化一个提示词工程项目，配置 connection, apikey
+- [x] `uf new` 创建一个提示词模版，即 prompty 文件
 - [ ] `uf run <xxx.prompty>`，启动 web ui 交互式对话界面，支持多轮对话，展示 request/response 详情
 - [x] `uf run <xxx.prompty> --data <xxx.json>` 批量测试，支持多线程
 - [ ] `uf serve` 以 API 方式启动微服务

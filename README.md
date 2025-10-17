@@ -43,8 +43,8 @@ UltraFlow 采用 `pdm` 进行项目管理，确保依赖的清晰和项目的可
 
 ### 3.1 项目规划
 
-- [ ] `uf init` 初始化一个提示词工程项目，配置 connection, apikey
-- [ ] `uf new` 创建一个提示词模版，即 prompty 文件
+- [x] `uf init` 初始化一个提示词工程项目，配置 connection, apikey
+- [x] `uf new` 创建一个提示词模版，即 prompty 文件
 - [ ] `uf run <xxx.prompty>`，启动 web ui 交互式对话界面，支持多轮对话，展示 request/response 详情
 - [x] `uf run <xxx.prompty> --data <xxx.json>` 批量测试，支持多线程
 - [ ] `uf serve` 以 API 方式启动微服务
