@@ -1,6 +1,74 @@
 site_name: UltraFlow
+site_description: 提示词工程开发、测试、部署一站式工具
+site_author: Henry He
+site_url: https://enthusa.github.io/UltraFlow/
+
+repo_name: enthusa/UltraFlow
+repo_url: https://github.com/enthusa/UltraFlow
+
 theme:
   name: material
+  language: zh
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: 切换到暗色模式
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: 切换到亮色模式
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+
 markdown_extensions:
   - pymdownx.tasklist:
       custom_checkbox: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - admonition
+  - pymdownx.details
+  - tables
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+
+nav:
+  - 首页: index.md
+  - 快速开始: get_started.md
+  - 使用指南:
+      - Prompty 文件格式: prompty_format.md
+      - 连接配置说明: connection_config.md
+      - API 参考文档: api_reference.md
+      - 实用示例: examples.md
+  - 常见问题: faq.md
+  - 反馈与贡献: feedback.md
+  - 参与开发: collaboration_tutorial.md
+
+plugins:
+  - search:
+      lang:
+        - zh
+        - en
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/enthusa/UltraFlow

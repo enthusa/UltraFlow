@@ -1,13 +1,14 @@
 import json
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from os import PathLike
 from pathlib import Path
-from typing import Any
+from typing import Any, Union
 
 from ultraflow.core.flow import Prompty
 
 
 class FlowProcessor:
-    def __init__(self, flow: Prompty, data_path: str, max_workers: int = 2):
+    def __init__(self, flow: Prompty, data_path: Union[str, PathLike], max_workers: int = 2):
         self.flow = flow
         self.data_path = Path(data_path)
         self.max_workers = max_workers
@@ -20,18 +21,21 @@ class FlowProcessor:
         return data if isinstance(data, list) else [data]
 
     @staticmethod
-    def _process_item(flow: Prompty, item: dict) -> Any:
+    def _process_item(flow: Prompty, item: dict, index: int, total: int) -> Any:
+        print(f'Process ({index + 1}/{total})')
         resolved_inputs = flow.resolve_inputs(item)
         return flow(**resolved_inputs)
 
     def _run_single_thread(self, flow: Prompty, items: list[Any]) -> list[Any]:
         print('Single-thread processing mode')
-        return [self._process_item(flow, item) for item in items]
+        return [self._process_item(flow, item, i, len(items)) for i, item in enumerate(items)]
 
     def _run_multi_thread(self, flow: Prompty, items: list[Any]) -> list[Any]:
         print(f'Multi-thread processing mode, using {self.max_workers} workers')
         with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
-            futures = {executor.submit(self._process_item, flow, item): item for item in items}
+            futures = {
+                executor.submit(self._process_item, flow, item, i, len(items)): item for i, item in enumerate(items)
+            }
             return [future.result() for future in as_completed(futures)]
 
     def run(self) -> list[Any]:
